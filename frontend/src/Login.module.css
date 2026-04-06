@@ -1,0 +1,358 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ─── CSS Variables ──────────────────────────────────────── */
+:root {
+  --bg-deep:        #03060f;
+  --bg-card:        rgba(8, 14, 28, 0.72);
+  --border-subtle:  rgba(99, 140, 210, 0.12);
+  --border-focus:   rgba(99, 160, 255, 0.45);
+  --accent-blue:    #4f8ef7;
+  --accent-teal:    #1dd9a0;
+  --text-primary:   #e8eef8;
+  --text-muted:     #4a5878;
+  --text-dim:       #2d3a52;
+  --input-bg:       #040914;
+  --error-bg:       rgba(32, 8, 8, 0.9);
+  --error-border:   rgba(226, 75, 74, 0.35);
+  --font-main:      'Sora', sans-serif;
+  --radius-card:    22px;
+  --radius-input:   11px;
+  --radius-btn:     12px;
+}
+
+/* ─── Page wrapper ────────────────────────────────────────── */
+.formContainer {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-deep);
+  padding: 40px 20px;
+  box-sizing: border-box;
+  font-family: var(--font-main);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Aurora blobs */
+.formContainer::before,
+.formContainer::after {
+  content: '';
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(100px);
+  pointer-events: none;
+  animation: drift 18s ease-in-out infinite alternate;
+}
+
+.formContainer::before {
+  width: 600px; height: 500px;
+  background: radial-gradient(ellipse, rgba(30, 60, 160, 0.18) 0%, transparent 70%);
+  top: -150px; right: -100px;
+}
+
+.formContainer::after {
+  width: 500px; height: 400px;
+  background: radial-gradient(ellipse, rgba(15, 100, 80, 0.13) 0%, transparent 70%);
+  bottom: -120px; left: -80px;
+  animation-delay: -9s;
+  animation-duration: 22s;
+}
+
+@keyframes drift {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(40px, 25px) scale(1.08); }
+  100% { transform: translate(-20px, 40px) scale(0.95); }
+}
+
+/* Grid texture */
+.gridOverlay {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(99, 140, 210, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99, 140, 210, 0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+}
+
+/* ─── Card ───────────────────────────────────────────────── */
+.formCard {
+  background: var(--bg-card);
+  border: 0.5px solid var(--border-subtle);
+  border-radius: var(--radius-card);
+  width: 100%;
+  max-width: 420px;
+  padding: 40px 36px 36px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  backdrop-filter: blur(28px) saturate(1.4);
+  -webkit-backdrop-filter: blur(28px) saturate(1.4);
+  box-shadow:
+    0 0 0 0.5px rgba(255, 255, 255, 0.04) inset,
+    0 40px 80px rgba(0, 0, 0, 0.7),
+    0 0 60px rgba(79, 142, 247, 0.06);
+  position: relative;
+  z-index: 2;
+  animation: cardReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Top shimmer line */
+.formCard::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 55%; height: 0.5px;
+  background: linear-gradient(to right, transparent, rgba(79, 142, 247, 0.4), transparent);
+  border-radius: 99px;
+}
+
+@keyframes cardReveal {
+  from { opacity: 0; transform: translateY(28px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ─── Brand ──────────────────────────────────────────────── */
+.logoRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 32px;
+}
+
+.logoMark {
+  width: 34px; height: 34px;
+  background: linear-gradient(135deg, #0f2040 0%, #0a1830 100%);
+  border: 0.5px solid rgba(79, 142, 247, 0.3);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 14px rgba(79, 142, 247, 0.15);
+}
+
+.logoMark svg { width: 17px; height: 17px; }
+
+.logoName {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 0.5px;
+}
+
+/* ─── Heading ────────────────────────────────────────────── */
+.formCard h2 {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 5px;
+  letter-spacing: -0.3px;
+  line-height: 1.3;
+  font-family: var(--font-main);
+}
+
+.subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0 0 28px;
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+/* ─── Field wrapper ─────────────────────────────────────── */
+.field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 14px;
+  width: 100%;
+  animation: fieldSlide 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.field:nth-child(1) { animation-delay: 0.08s; }
+.field:nth-child(2) { animation-delay: 0.14s; }
+
+@keyframes fieldSlide {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Labels ─────────────────────────────────────────────── */
+.fieldLabel {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+/* ─── Inputs — dark background forced, autofill neutralised ── */
+.formCard input {
+  width: 100%;
+  background: var(--input-bg) !important;
+  border: 0.5px solid var(--border-subtle);
+  border-radius: var(--radius-input);
+  padding: 11px 14px;
+  font-size: 13.5px;
+  color: var(--text-primary) !important;
+  -webkit-text-fill-color: var(--text-primary) !important;
+  caret-color: var(--accent-blue);
+  font-family: var(--font-main);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+  margin-bottom: 0;
+}
+
+/*
+ * The only reliable way to kill Chrome/Edge autofill white flash:
+ * paint an inset box-shadow over the UA background and
+ * set a huge transition-delay so the colour never actually changes.
+ */
+.formCard input:-webkit-autofill,
+.formCard input:-webkit-autofill:hover,
+.formCard input:-webkit-autofill:focus,
+.formCard input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #040914 inset !important;
+          box-shadow: 0 0 0 1000px #040914 inset !important;
+  -webkit-text-fill-color: var(--text-primary) !important;
+  caret-color: var(--accent-blue);
+  border-color: var(--border-subtle) !important;
+  transition: background-color 99999s ease 0s,
+              border-color 0.2s,
+              box-shadow 0.2s;
+}
+
+.formCard input::placeholder {
+  color: var(--text-dim);
+  -webkit-text-fill-color: var(--text-dim);
+  font-weight: 300;
+}
+
+.formCard input:focus {
+  border-color: var(--border-focus);
+  box-shadow:
+    0 0 0 3px rgba(79, 142, 247, 0.09),
+    0 0 20px rgba(79, 142, 247, 0.06);
+}
+
+/* ─── Forgot password row ────────────────────────────────── */
+.forgotRow {
+  display: flex;
+  justify-content: flex-end;
+  margin: 4px 0 6px;
+}
+
+.forgotRow a {
+  font-size: 12px;
+  color: var(--accent-blue);
+  text-decoration: none;
+  font-weight: 400;
+  transition: color 0.15s;
+}
+
+.forgotRow a:hover { color: #a8cff0; }
+
+/* ─── Divider ────────────────────────────────────────────── */
+.divider {
+  height: 0.5px;
+  background: linear-gradient(90deg, transparent, rgba(99, 140, 210, 0.12), transparent);
+  margin: 6px 0 18px;
+}
+
+/* ─── Submit button ──────────────────────────────────────── */
+.btnSubmit {
+  width: 100%;
+  padding: 13px;
+  border-radius: var(--radius-btn);
+  border: none;
+  background: linear-gradient(135deg, #132950 0%, #0f2040 60%, #0c1a34 100%);
+  color: #7fb3f0;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: var(--font-main);
+  transition: all 0.2s;
+  letter-spacing: 0.15px;
+  position: relative;
+  overflow: hidden;
+  margin-top: 6px;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.04) inset,
+    0 8px 24px rgba(0, 0, 0, 0.4);
+  animation: fieldSlide 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.22s both;
+}
+
+.btnSubmit::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(79, 142, 247, 0.12), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.btnSubmit:hover {
+  background: linear-gradient(135deg, #163260 0%, #122548 60%, #0f1e3e 100%);
+  color: #a8cff0;
+  box-shadow: 0 0 30px rgba(79, 142, 247, 0.15), 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.btnSubmit:hover::before { opacity: 1; }
+.btnSubmit:active        { transform: scale(0.99); }
+.btnSubmit:disabled      { opacity: 0.5; cursor: not-allowed; }
+
+.btnArrow {
+  display: inline-block;
+  margin-left: 6px;
+  transition: transform 0.2s;
+}
+.btnSubmit:hover .btnArrow { transform: translateX(3px); }
+
+/* ─── Error message ──────────────────────────────────────── */
+.vbtnSubmit {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin-top: 14px;
+  font-size: 12.5px;
+  color: #e26b6a;
+  padding: 11px 14px;
+  background: var(--error-bg);
+  border: 0.5px solid var(--error-border);
+  border-radius: 10px;
+  line-height: 1.55;
+  font-family: var(--font-main);
+  animation: popupIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes popupIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Sign-up row ────────────────────────────────────────── */
+.signUpRow {
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--text-muted);
+  margin-top: 20px;
+  font-weight: 300;
+}
+
+.signUpRow a {
+  color: var(--accent-blue);
+  text-decoration: none;
+  font-weight: 400;
+  transition: color 0.15s;
+}
+
+.signUpRow a:hover { color: #a8cff0; }
+
+/* ─── Responsive ─────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .formCard { padding: 32px 24px 28px; border-radius: 18px; }
+  .formCard h2 { font-size: 20px; }
+}
