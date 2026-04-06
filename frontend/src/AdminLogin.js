@@ -16,7 +16,7 @@ export default function AdminLogin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:8081/admin-login", form);
+      const res = await axios.post(" https://hospital-backend-tpge.onrender.com/admin-login", form);
       setPopup(res.data.message);
 
       if (res.data.success) {
