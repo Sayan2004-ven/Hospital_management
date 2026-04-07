@@ -143,7 +143,7 @@ export default function HospitalDetails() {
 
   useEffect(() => {
     axios.get("https://hospital-management-89cv.onrender.com/hospitals").then(res => {
-      if (res.data.success) setHospital(res.data.hospitals.find(h => h.id == id));
+      if (res.data.success) setHospital(res.data.hospitals.find(h => h.id === id));
     });
   }, [id]);
 
