@@ -18,7 +18,7 @@ export default function UpdateUser() {
   useEffect(() => {
     if (!location.state?.user) {
       axios
-        .get(`http://localhost:8081/user/${id}`)
+        .get(`https://hospital-management-89cv.onrender.com/user/${id}`)
         .then(res => {
           if (res.data.success) setValues(res.data.user);
         })
@@ -29,7 +29,7 @@ export default function UpdateUser() {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .put(`http://localhost:8081/update/${id}`, values)
+      .put(`https://hospital-management-89cv.onrender.com/update/${id}`, values)
       .then(res => {
         if (res.data.success) {
           alert(res.data.message);

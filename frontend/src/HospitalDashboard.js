@@ -137,7 +137,7 @@ export default function HospitalDashboard() {
 
   useEffect(() => {
     if (!user) return;
-    axios.get("http://localhost:8081/hospitals")
+    axios.get("https://hospital-management-89cv.onrender.com/hospitals")
       .then(res => { if (res.data.success) setHospitals(res.data.hospitals); })
       .catch(console.error)
       .finally(() => setLoading(false));
