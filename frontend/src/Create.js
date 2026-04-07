@@ -58,7 +58,7 @@ export default function Create() {
     }
     setOtpLoading(true);
     try {
-      const res = await axios.post(" https://hospital-backend-tpge.onrender.com/send-otp", { phone: form.phone });
+      const res = await axios.post("http://localhost:8081/send-otp", { phone: form.phone });
       showPopup(res.data.message, !res.data.success);
       if (res.data.success) setOtpSent(true);
     } catch {
@@ -87,14 +87,14 @@ export default function Create() {
 
     setSubmitting(true);
     try {
-      const verify = await axios.post(" https://hospital-backend-tpge.onrender.com/verify-otp", {
+      const verify = await axios.post("http://localhost:8081/verify-otp", {
         phone: form.phone, otp,
       });
       if (!verify.data.success) {
         showPopup("Invalid OTP. Please check and retry.", true);
         return;
       }
-      const res = await axios.post(" https://hospital-backend-tpge.onrender.com/create", form);
+      const res = await axios.post("http://localhost:8081/create", form);
       if (res.data.success) {
         showPopup(`✅ ${res.data.message} · User ID: ${res.data.userId}`);
       } else {

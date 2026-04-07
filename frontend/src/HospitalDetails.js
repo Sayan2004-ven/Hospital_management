@@ -142,8 +142,8 @@ export default function HospitalDetails() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get("https://hospital-backend-tpge.onrender.com/hospitals").then(res => {
-      if (res.data.success) setHospital(res.data.hospitals.find(h => h.id === id));
+    axios.get("http://localhost:8081/hospitals").then(res => {
+      if (res.data.success) setHospital(res.data.hospitals.find(h => h.id == id));
     });
   }, [id]);
 

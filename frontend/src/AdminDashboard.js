@@ -20,7 +20,7 @@ export default function AdminDashboard() {
   // Fetch users
   useEffect(() => {
     if (!isAdmin) return;
-    axios.get(" https://hospital-backend-tpge.onrender.com/all-users")
+    axios.get("http://localhost:8081/all-users")
       .then(res => {
         if (res.data.success) setUsers(res.data.users);
       })
@@ -35,7 +35,7 @@ export default function AdminDashboard() {
   // ✅ FIX 10: Added .catch() so errors aren't swallowed silently
   const deleteUser = (id) => {
     if (window.confirm("Delete this customer?")) {
-      axios.delete(` https://hospital-backend-tpge.onrender.com/delete/${id}`)
+      axios.delete(`http://localhost:8081/delete/${id}`)
         .then(() => setUsers(users.filter(u => u.id !== id)))
         .catch(err => alert("Delete failed: " + err.message));
     }
@@ -131,7 +131,7 @@ export default function AdminDashboard() {
           />
           <button
             className={styles.deleteBtn}
-            onClick={() => window.open(" https://hospital-backend-tpge.onrender.com/download-all")}
+            onClick={() => window.open("http://localhost:8081/download-all")}
           >
             ⬇ Download All
           </button>
@@ -158,7 +158,7 @@ export default function AdminDashboard() {
                     <td>
                       <button
                         className={`${styles.actionBtn} ${styles.downloadBtn}`}
-                        onClick={() => window.open(` https://hospital-backend-tpge.onrender.com/download-user/${user.id}`)}
+                        onClick={() => window.open(`http://localhost:8081/download-user/${user.id}`)}
                       >⬇</button>
                       <button
                         className={`${styles.actionBtn} ${styles.printBtn}`}

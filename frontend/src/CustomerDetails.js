@@ -12,7 +12,7 @@ export default function CustomerDetails() {
   useEffect(() => {
     if (!user && id) {
       axios
-        .get(` https://hospital-backend-tpge.onrender.com/user/${id}`)
+        .get(`http://localhost:8081/user/${id}`)
         .then((res) => {
           if (res.data.success) {
             setUser(res.data.user);
@@ -32,7 +32,7 @@ export default function CustomerDetails() {
   const deleteCustomer = () => {
     if (window.confirm("Are you sure you want to delete your account?")) {
       axios
-        .delete(` https://hospital-backend-tpge.onrender.com/delete/${id}`)
+        .delete(`http://localhost:8081/delete/${id}`)
         .then(() => {
           alert("Customer Deleted Successfully");
           navigate("/");

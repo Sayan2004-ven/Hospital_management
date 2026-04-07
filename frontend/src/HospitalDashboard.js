@@ -137,7 +137,7 @@ export default function HospitalDashboard() {
 
   useEffect(() => {
     if (!user) return;
-    axios.get(" https://hospital-backend-tpge.onrender.com/hospitals")
+    axios.get("http://localhost:8081/hospitals")
       .then(res => { if (res.data.success) setHospitals(res.data.hospitals); })
       .catch(console.error)
       .finally(() => setLoading(false));
