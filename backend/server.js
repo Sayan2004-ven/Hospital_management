@@ -194,6 +194,15 @@ app.get("/hospitals", (req, res) => {
     res.json({ success: true, data: result });
   });
 });
+app.get("/test-db", (req, res) => {
+  pool.query("SELECT 1", (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.json({ success: false, error: err.message });
+    }
+    res.json({ success: true, result });
+  });
+});
 
 // ================= SERVER =================
 const PORT = process.env.PORT || 8081;
